@@ -28,7 +28,7 @@ module.exports = function(grunt) {
     }
 
     if (data.data) {
-      data.options.data = _.extend(data.options.data || {}, grunt.file.readJSON(data.data));
+      data.options = _.extend(data.options || {}, grunt.file.readJSON(data.data));
     }
     grunt.util.async.forEachSeries(this.files, function(f, nextFileObj) {
       var destFile = f.dest;
@@ -54,7 +54,6 @@ module.exports = function(grunt) {
 
       var srcFile = f.src.pop();
       var options = _.clone(data.options, true);
-      //console.log(options);
       consolidate[data.engine](srcFile, options, function(err, html){
         if (err)
         {
