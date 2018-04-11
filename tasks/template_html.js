@@ -28,7 +28,13 @@ module.exports = function(grunt) {
     }
 
     if (data.data) {
-      data.options = _.extend(data.options || {}, grunt.file.readJSON(data.data));
+      var dataContent;
+      if (grunt.util.kindOf(data.data) === 'function') {
+        dataContent = data.data() || {};
+      } else {
+        dataContent = grunt.file.readJSON(data.data);
+      }
+      data.options = _.extend(data.options || {}, dataContent);
     }
     grunt.util.async.forEachSeries(this.files, function(f, nextFileObj) {
       var destFile = f.dest;
