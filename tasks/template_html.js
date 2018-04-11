@@ -21,6 +21,7 @@ module.exports = function(grunt) {
 
     var data = this.data;
     if (data.partials && data.cwd) {
+      data.cwd = (data.cwd.lastIndexOf('/') === data.cwd.length - 1) ? data.cwd : data.cwd + "/";
       var partials = grunt.file.expand(data.partials).map(function(filepath){
         return filepath.replace(data.cwd, '').split('.')[0];
       });
@@ -34,7 +35,7 @@ module.exports = function(grunt) {
       } else {
         dataContent = grunt.file.readJSON(data.data);
       }
-      data.options = _.extend(data.options || {}, dataContent);
+      data.options.data = _.extend(data.options.data || {}, dataContent);
     }
     grunt.util.async.forEachSeries(this.files, function(f, nextFileObj) {
       var destFile = f.dest;
