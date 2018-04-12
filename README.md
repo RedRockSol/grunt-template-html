@@ -45,10 +45,25 @@ partials: ['test/fixtures/modules/*.hbs']
 ```
 #### data
 
-Path to data file
+- Path to data file
 ```js
 data: 'test/fixtures/data/data.json'
 ```
+
+- Function, which MUST return an Object, which will serve as template data
+```
+data: function() {
+	return {
+	  some: "object"
+	};
+}
+```
+
+- Object, which will be the data object itself
+```
+data: { some: "object"}
+```
+
 ### Usage Examples
 
 ```js

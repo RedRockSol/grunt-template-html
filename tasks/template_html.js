@@ -29,10 +29,15 @@ module.exports = function(grunt) {
     }
 
     if (data.data) {
-      var dataContent;
-      if (grunt.util.kindOf(data.data) === 'function') {
+      var dataContent, dataKind = grunt.util.kindOf(data.data);
+
+      if (dataKind === 'function') {
         dataContent = data.data() || {};
-      } else {
+      } else if (dataKind === 'object') {
+        dataContent = data.data;
+      }
+      else {
+        // we expect a filename string
         dataContent = grunt.file.readJSON(data.data);
       }
       data.options.data = _.extend(data.options.data || {}, dataContent);
